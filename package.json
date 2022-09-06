@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ClaytonStealth/ExpressIntro/issues"
   },
-  "homepage": "https://github.com/ClaytonStealth/ExpressIntro#readme"
+  "homepage": "https://github.com/ClaytonStealth/ExpressIntro#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
 }
