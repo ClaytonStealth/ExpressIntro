@@ -99,11 +99,7 @@ app.post("/new-movie", (req, res) => {
     //well use req.body to get the body payload from the post request that contains our new movie
 
     console.log(req.body)
-    // const newMovieTitle = {
-    //     title: req.body.title,
-    //     starRating: req.body.starRating,
-    //     isRecommended: req.body.isRecommended
-    // }
+
     const newMovie = {
         title: "",
         starRating: 0,
@@ -181,16 +177,60 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
     console.log("req params ", req.params)
 
     const titleToUpdate = req.params.titleToUpdate
-    const newTitle = req.body.newTitle
 
-    console.log(titleToUpdate)
-    console.log(newTitle)
-    console.log("favoriteMovieList before", favoriteMovieList)
-    // In order to update the movie title we're targeting, first we find the index of the movie title in the array
-    const indexOfMovie = favoriteMovieList.indexOf(titleToUpdate)
-    console.log(indexOfMovie)
+    // const newTitle = req.body.newTitle
+
+
+
+    const originalMovieIndex = favoriteMovieList.findIndex((movie) => {
+        console.log("movie", movie)
+        console.log()
+        return movie.title === req.params.titleToUpdate
+
+        if (movie.title === req.params.titleToUpdate) {
+            console.log("movie titles match")
+            return true
+        } else {
+            console.log("movie titles do not match")
+            return false
+        }
+    })
+    console.log("originalmovieINDEX", originalMovieIndex)
+
+    const originalMovie = favoriteMovieList[originalMovieIndex]
+    console.log("originalMovie", originalMovie)
+
+    const updatedMovie = {
+        title: originalMovie.title,
+        starRating: originalMovie.starRating,
+        isRecommended: originalMovie.isRecommended,
+        createdAt: originalMovie.createdAt,
+        lastModified: new Date()
+    }
+
+    console.log("updateMovie before update ", updatedMovie)
+
+    //we need to find the original movie in our movie array so that we can keep the original values that we dont want to modify. hint: we need to use .findIndex()
+
+    if (req.body.title !== undefined) {
+        updatedMovie.title = req.body.title
+    }
+
+    if (req.body.starRating !== undefined) {
+        updatedMovie.starRating = req.body.starRating
+    }
+
+    if (req.body.isRecommended !== undefined) {
+        updatedMovie.isRecommended = req.body.isRecommended
+    }
+
+    console.log("updateMovie after update ", updatedMovie)
+
+
+
     // Overwrite the value of favoriteMovieList at indexOfMovie with newTitle
-    favoriteMovieList[indexOfMovie] = newTitle
+    // favoriteMovieList[indexOfMovie] = newTitle
+    favoriteMovieList[originalMovieIndex] = updatedMovie;
     console.log(favoriteMovieList)
 
     console.log("favoriteMovieList after", favoriteMovieList)
