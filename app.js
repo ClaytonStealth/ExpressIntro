@@ -13,7 +13,33 @@ app.use(bodyParser.json())
 
 const port = 3000
 
-const favoriteMovieList = ["Sunshine", "Inside Out", "Inception", "Fight Club"]
+const favoriteMovieList = [{
+    title: "Sunshine",
+    starRating: 5,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
+}, {
+    title: "Inside Out",
+    starRating: 5,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
+}, {
+    title: "Inception",
+    starRating: 5,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
+}, {
+    title: "Fight Club",
+    starRating: 5,
+    isRecommended: true,
+    createdAt: new Date(),
+    lastModified: new Date()
+}]
+
+
 const today = new Date();
 let moviesString = null
 let queryParamFirstName = null
@@ -69,6 +95,7 @@ app.get("/show-user-info", (req, res) => {
 
 //Post a new movie into the movies array
 app.post("/new-movie", (req, res) => {
+    console.log("POST to /new-movie")
     //well use req.body to get the body payload from the post request that contains our new movie
     console.log(req.body)
     const newMovieTitle = req.body.title
@@ -82,6 +109,7 @@ app.post("/new-movie", (req, res) => {
 
 //get all movies in our movie list
 app.get("/all-movies", (req, res) => {
+    console.log("GET to /all-movies")
     //res.send only sends strings. From now on, we want to use res.json to send JSON objects or JS arrays
     res.json(favoriteMovieList)
 })
@@ -90,6 +118,7 @@ app.get("/all-movies", (req, res) => {
 //Update
 //find a movie and update the title
 app.put("/update-movie/:titleToUpdate", (req, res) => {
+    console.log("PUT to /update-movie")
     // We hjave a route parameter /:titleToUpdate to specify which movie in our list to update
     //the value of this route parameter will come through the req.params object
     console.log("req params ", req.params)
@@ -117,6 +146,7 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
 //Delete
 
 app.delete("/delete-movie/:titleToDelete", (req, res) => {
+    console.log("DELETE to /delete-movie")
 
     //This is t he title of the movie we want to find in the mopvies array and delete
     const titleToDelete = req.params.titleToDelete
