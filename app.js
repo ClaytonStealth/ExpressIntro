@@ -246,11 +246,23 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
     console.log("DELETE to /delete-movie")
 
     //This is t he title of the movie we want to find in the mopvies array and delete
-    const titleToDelete = req.params.titleToDelete
+    // const titleToDelete = req.params.titleToDelete
 
     //find the inddex of the movie in the movie list
-    const indexOfMovie = favoriteMovieList.indexOf(titleToDelete)
+    const indexOfMovie = favoriteMovieList.findIndex((movie) => {
+        // return movie.title === req.params.titleToUpdate
+        console.log(movie.title + "===" + req.params.titleToDelete)
+        if (movie.title === req.params.titleToDelete) {
+            console.log("movie titles match")
+            return true
+        } else {
+            console.log("movie titles do not match")
+            return false
+        }
+    })
     console.log(indexOfMovie)
+
+
     if (indexOfMovie < 0) {
         //if the movie was not found in the array, respond with hasBeenDeleted: false and return so that no code underneath executes
         res.json({
