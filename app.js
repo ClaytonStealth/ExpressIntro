@@ -279,6 +279,24 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
     })
 })
 
+app.get("/single-movie/:titleToFind", (req, res) => {
+    const titleToFind = req.params.titleToFind
+    const foundMovieIndex = favoriteMovieList.findIndex((movie) => {
+        console.log("movie", movie)
+        console.log()
+        // return movie.title === req.params.titleToUpdate
+
+        if (movie.title === titleToFind) {
+            console.log("Found Movie")
+            return true
+        } else {
+            console.log("Movie not found")
+            return false
+        }
+    })
+    const foundMovie = favoriteMovieList[foundMovieIndex]
+    res.json(foundMovie)
+})
 
 //Finally, run the server
 app.listen(port, () => {
