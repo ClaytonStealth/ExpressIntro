@@ -181,12 +181,13 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
     // const newTitle = req.body.newTitle
 
 
-
+//getting index of a specifc movie in favorite movie array using findIndex
     const originalMovieIndex = favoriteMovieList.findIndex((movie) => {
         console.log("movie", movie)
         console.log()
-        return movie.title === req.params.titleToUpdate
 
+        return movie.title === req.params.titleToUpdate
+//if the movie in the url "what we are looking for" matches one of the .titles then return true or if not false
         if (movie.title === req.params.titleToUpdate) {
             console.log("movie titles match")
             return true
@@ -196,10 +197,10 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
         }
     })
     console.log("originalmovieINDEX", originalMovieIndex)
-
+//variable to take a movie we selected from favoritemovie list using 
     const originalMovie = favoriteMovieList[originalMovieIndex]
     console.log("originalMovie", originalMovie)
-
+//updated movie equaling the keys and values of originalMovie
     const updatedMovie = {
         title: originalMovie.title,
         starRating: originalMovie.starRating,
@@ -211,7 +212,7 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
     console.log("updateMovie before update ", updatedMovie)
 
     //we need to find the original movie in our movie array so that we can keep the original values that we dont want to modify. hint: we need to use .findIndex()
-
+//checking if the request body properties we are adjusting are not undefined then update the updatedMovie key values
     if (req.body.title !== undefined) {
         updatedMovie.title = req.body.title
     }
@@ -230,6 +231,7 @@ app.put("/update-movie/:titleToUpdate", (req, res) => {
 
     // Overwrite the value of favoriteMovieList at indexOfMovie with newTitle
     // favoriteMovieList[indexOfMovie] = newTitle
+    //the movie in the favoriteMovieList @ the Index of originalMovie now equals the updatedMovie we just changed
     favoriteMovieList[originalMovieIndex] = updatedMovie;
     console.log(favoriteMovieList)
 
@@ -252,6 +254,7 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
     const indexOfMovie = favoriteMovieList.findIndex((movie) => {
         // return movie.title === req.params.titleToUpdate
         console.log(movie.title + "===" + req.params.titleToDelete)
+        //checking if the url movie title equals any of the movie titles in the array
         if (movie.title === req.params.titleToDelete) {
             console.log("movie titles match")
             return true
@@ -271,7 +274,7 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
         return;
     }
     console.log("Before Delete", favoriteMovieList)
-    //remove the movie title from the array at the index
+    //remove the movie title from the array at the index and remove 1 item
     favoriteMovieList.splice(indexOfMovie, 1)
     console.log("After Delete", favoriteMovieList)
     res.json({
@@ -280,7 +283,9 @@ app.delete("/delete-movie/:titleToDelete", (req, res) => {
 })
 
 app.get("/single-movie/:titleToFind", (req, res) => {
+    //title to find equaling the url movie we enter in
     const titleToFind = req.params.titleToFind
+    // finding index of favorite movie list
     const foundMovieIndex = favoriteMovieList.findIndex((movie) => {
         console.log("movie", movie)
         console.log()
@@ -294,6 +299,7 @@ app.get("/single-movie/:titleToFind", (req, res) => {
             return false
         }
     })
+    //found movie equalling the movie in the list at the index from above
     const foundMovie = favoriteMovieList[foundMovieIndex]
     res.json(foundMovie)
 })
